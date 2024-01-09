@@ -12,7 +12,7 @@
     align-items: center;
     margin: 0px 10px;
 }
-.num:hover{
+.num:hover,.select{
 background-color: grey;
 scale: 1.05;
 transition: ease-in-out 10ms;
