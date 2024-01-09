@@ -1,0 +1,20 @@
+.nums{
+    display: flex;
+    /* flex-wrap: ; */
+}
+.num{
+    background-color: black;
+    height: 50px;
+    width: 50px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 10px;
+}
+.num:hover{
+background-color: grey;
+scale: 1.05;
+transition: ease-in-out 10ms;
+cursor: pointer;
+}
