@@ -1,8 +1,9 @@
-.nums{
+.nums {
     display: flex;
-    /* flex-wrap: ; */
+    flex-wrap: wrap;
+    justify-content: center;
 }
-.num{
+.num {
     background-color: black;
     height: 50px;
     width: 50px;
@@ -10,11 +11,39 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0px 10px;
+    margin: 10px 10px;
+    /* display: none; */
 }
-.num:hover,.select{
-background-color: grey;
-scale: 1.05;
-transition: ease-in-out 10ms;
-cursor: pointer;
+.num:hover,
+.select {
+    background-color: grey;
+    scale: 1.05;
+    transition: ease-in-out 10ms;
+    cursor: pointer;
+}
+#board{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1fr);
+    height: 600px;
+    width: 600px;
+}
+.x3 {
+    background-color: rgb(77, 70, 70);
+    height: 200px;
+    width: 200px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 3px;
+    padding: 2.5px;
+}
+.box {
+    background-color: rgb(63, 188, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: larger;
+    font-weight: bolder;
 }
