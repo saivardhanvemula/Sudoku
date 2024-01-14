@@ -25,11 +25,14 @@
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(3,1fr);
-    height: 600px;
-    width: 600px;
+    /* place-items: center; */
+    height: 615px;
+    width: 615px;
+    background-color: black;
+    padding: 3px;
 }
 .x3 {
-    background-color: rgb(77, 70, 70);
+    /* background-color: black; */
     height: 200px;
     width: 200px;
     display: grid;
@@ -39,7 +42,8 @@
     padding: 2.5px;
 }
 .box {
-    background-color: rgb(63, 188, 255);
+    /* background-color: rgb(63, 188, 255); */
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
