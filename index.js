@@ -21,12 +21,15 @@ document.querySelectorAll(".box").forEach((b) => {
     });
 });
 function display_board(board) {
-    for (let i = 1; i < 10; i++) {
-        for (let j = 1; j < 10; j++) {
-            console.log(i,j)
-            if(board[i-1][j-1]){
-                document.querySelector(`.s${i}  #r${j}`).innerHTML=board[i-1][j-1]
-                document.querySelector(`.s${i}  #r${j}`).classList.add("fixed")
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            // console.log(i,j)
+            if(!board[i][j]==0){
+                document.querySelector(`.s${i+1}  #r${j+1}`).innerHTML=board[i][j]
+                document.querySelector(`.s${i+1}  #r${j+1}`).classList.add("fixed")
+            }
+            else{
+                document.querySelector(`.s${i+1}  #r${j+1}`).innerHTML=" "; 
             }
             // let b=$`.s{i}>#{j}`
             
@@ -76,6 +79,7 @@ function solve(board) {
     return false;
 }
 function remove_some(board){
+    // console.log(board)
     for (let i = 0; i < Math.floor(Math.random() * 15) + 35; i++) {
         let row, col;
         do {
@@ -85,9 +89,9 @@ function remove_some(board){
     
         board[row][col] = 0;
       }
-    
+    // console.log(board)
 }
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async() => {
     let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     let sudoku_board = Array(9)
         .fill(0)
@@ -98,9 +102,18 @@ document.addEventListener("DOMContentLoaded", () => {
             sudoku_board[3 * i][3 * j] = a;
             nums.splice(nums.indexOf(a), 1);
         }
-    }
-    solve(sudoku_board);
-    remove_some(sudoku_board);
+    }  
+    solve(sudoku_board) 
+    console.log(sudoku_board)
+    // await console.log(sudoku_board)
+    // if(solve(sudoku_board)){
+    //     remove_some(sudoku_board)
+    //     // console.log(sudoku_board)
+    // }
+    // await console.log(sudoku_board)
+    // console.log(sudoku_board)
+    // remove_some(sudoku_board);
+    // console.log(is_valid(sudoku_board))
     display_board(sudoku_board);
     // console.log(sudoku_board);
 });
