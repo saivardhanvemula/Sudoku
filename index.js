@@ -1,4 +1,20 @@
-let selected = 0;
+document.addEventListener("DOMContentLoaded", () => {
+    let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    sudoku_board = Array(9)
+        .fill(0)
+        .map((x) => Array(9).fill(0));
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            let a = nums[Math.floor(Math.random() * nums.length)];
+            sudoku_board[3 * i][3 * j] = a;
+            nums.splice(nums.indexOf(a), 1);
+        }
+    }
+    solve(sudoku_board);
+    remove_some(sudoku_board);
+    display_board(sudoku_board);
+});
+let empty = 1;
 nums = document.querySelectorAll(".num");
 nums.forEach((b) => {
     b.addEventListener("click", () => {
@@ -13,37 +29,42 @@ nums.forEach((b) => {
         });
     });
 });
+document.querySelector(".validate").addEventListener("click", () => {
+    console.log(valid_sudoku(sudoku_board));
+});
 document.querySelectorAll(".box").forEach((b) => {
     b.addEventListener("click", () => {
         if (selected && !b.classList.contains("fixed")) {
-            b.innerHTML = selected.innerHTML;
+            let x = b.id[1];
+            let y = b.id[2];
+            if (!sudoku_board[x-1][y-1]) {
+                empty = empty - 1;
+            }
             
+            sudoku_board[x - 1][y - 1] = Number(selected.innerHTML);
+            b.innerHTML = selected.innerHTML;
+            // console.log(x,y)
         }
-        // if()
+        console.log(empty);
+        if (empty == 0) {
+            console.log("completed");
+        }
     });
 });
 function display_board(board) {
-    // for (let i = 0; i < 9; i++) {
-    //     let srow = 0;
-    //     let scol = 0;
-    //     for (let j = 0; j < 3; j++) {
-    //         for (let k = 0; k < 3; k++) {
-                
-    //         }
-    //     }
-    // }
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
             // console.log(i,j)
-            if(!board[i][j]==0){
-                document.querySelector(`#r${i+1}${j+1}`).innerHTML=board[i][j]
-                document.querySelector(`#r${i+1}${j+1}`).classList.add("fixed")
+            if (!board[i][j] == 0) {
+                document.querySelector(`#r${i + 1}${j + 1}`).innerHTML =
+                    board[i][j];
+                document
+                    .querySelector(`#r${i + 1}${j + 1}`)
+                    .classList.add("fixed");
+            } else {
+                document.querySelector(`#r${i + 1}${j + 1}`).innerHTML = " ";
+                empty = empty + 1;
             }
-            else{
-                document.querySelector(`#r${i+1}${j+1}`).innerHTML=" ";
-            }
-            // let b=$`.s{i}>#{j}`
-
         }
     }
 }
@@ -100,34 +121,6 @@ function remove_some(board) {
 
         board[row][col] = 0;
     }
-    return board
+    return board;
     // console.log(board)
 }
-document.addEventListener("DOMContentLoaded",  () => {
-    let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    sudoku_board = Array(9)
-        .fill(0)
-        .map((x) => Array(9).fill(0));
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            let a = nums[Math.floor(Math.random() * nums.length)];
-            sudoku_board[3 * i][3 * j] = a;
-            nums.splice(nums.indexOf(a), 1);
-        }
-    }
-    let inital=sudoku_board;
-    console.log(inital)
-    solve(sudoku_board);
-    console.log(sudoku_board);
-    // await console.log(sudoku_board)
-    // if(solve(sudoku_board)){
-    //     remove_some(sudoku_board)
-    //     // console.log(sudoku_board)
-    // }
-    // await console.log(sudoku_board)
-    // console.log(sudoku_board)
-    removed_board=remove_some(sudoku_board);
-    // console.log(is_valid(sudoku_board))
-    display_board(removed_board);
-    // console.log(sudoku_board);
-});
