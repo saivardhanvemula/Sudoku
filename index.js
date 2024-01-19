@@ -103,7 +103,11 @@ function remove_some(board) {
     return board
     // console.log(board)
 }
-document.addEventListener("DOMContentLoaded", async() => {
+<<<<<<< HEAD
+document.addEventListener("DOMContentLoaded", () => {
+=======
+document.addEventListener("DOMContentLoaded", () => {
+>>>>>>> 68818d286e0b1fb318e33e817997cd10e53d3080
     let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     sudoku_board = Array(9)
         .fill(0)
@@ -126,7 +130,11 @@ document.addEventListener("DOMContentLoaded", async() => {
     // }
     // await console.log(sudoku_board)
     // console.log(sudoku_board)
-    // remove_some(sudoku_board);
+<<<<<<< HEAD
+    removed_board=remove_some(sudoku_board);
+=======
+    remove_some(sudoku_board);
+>>>>>>> 68818d286e0b1fb318e33e817997cd10e53d3080
     // console.log(is_valid(sudoku_board))
     display_board(removed_board);
     // console.log(sudoku_board);
