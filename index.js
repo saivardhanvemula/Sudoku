@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     // }
     // await console.log(sudoku_board)
     // console.log(sudoku_board)
-    // remove_some(sudoku_board);
+    remove_some(sudoku_board);
     // console.log(is_valid(sudoku_board))
     display_board(sudoku_board);
     // console.log(sudoku_board);
