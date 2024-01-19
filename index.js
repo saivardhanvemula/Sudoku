@@ -91,7 +91,7 @@ function remove_some(board){
       }
     // console.log(board)
 }
-document.addEventListener("DOMContentLoaded", async() => {
+document.addEventListener("DOMContentLoaded", () => {
     let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     let sudoku_board = Array(9)
         .fill(0)
