@@ -15,24 +15,35 @@ nums.forEach((b) => {
 });
 document.querySelectorAll(".box").forEach((b) => {
     b.addEventListener("click", () => {
-        if (selected && ! b.classList.contains("fixed")) {
+        if (selected && !b.classList.contains("fixed")) {
             b.innerHTML = selected.innerHTML;
+            
         }
+        // if()
     });
 });
 function display_board(board) {
+    // for (let i = 0; i < 9; i++) {
+    //     let srow = 0;
+    //     let scol = 0;
+    //     for (let j = 0; j < 3; j++) {
+    //         for (let k = 0; k < 3; k++) {
+                
+    //         }
+    //     }
+    // }
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
             // console.log(i,j)
             if(!board[i][j]==0){
-                document.querySelector(`.s${i+1}  #r${j+1}`).innerHTML=board[i][j]
-                document.querySelector(`.s${i+1}  #r${j+1}`).classList.add("fixed")
+                document.querySelector(`#r${i+1}${j+1}`).innerHTML=board[i][j]
+                document.querySelector(`#r${i+1}${j+1}`).classList.add("fixed")
             }
             else{
-                document.querySelector(`.s${i+1}  #r${j+1}`).innerHTML=" "; 
+                document.querySelector(`#r${i+1}${j+1}`).innerHTML=" ";
             }
             // let b=$`.s{i}>#{j}`
-            
+
         }
     }
 }
@@ -78,22 +89,23 @@ function solve(board) {
     }
     return false;
 }
-function remove_some(board){
+function remove_some(board) {
     // console.log(board)
     for (let i = 0; i < Math.floor(Math.random() * 15) + 35; i++) {
         let row, col;
         do {
-          row = Math.floor(Math.random() * 9);
-          col = Math.floor(Math.random() * 9);
+            row = Math.floor(Math.random() * 9);
+            col = Math.floor(Math.random() * 9);
         } while (board[row][col] === 0);
-    
+
         board[row][col] = 0;
-      }
+    }
+    return board
     // console.log(board)
 }
-document.addEventListener("DOMContentLoaded", async() => {
+document.addEventListener("DOMContentLoaded", async () => {
     let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let sudoku_board = Array(9)
+    sudoku_board = Array(9)
         .fill(0)
         .map((x) => Array(9).fill(0));
     for (let i = 0; i < 3; i++) {
@@ -102,9 +114,11 @@ document.addEventListener("DOMContentLoaded", async() => {
             sudoku_board[3 * i][3 * j] = a;
             nums.splice(nums.indexOf(a), 1);
         }
-    }  
-    solve(sudoku_board) 
-    console.log(sudoku_board)
+    }
+    // let inital=sudoku_board;
+    // console.log(inital)
+    solve(sudoku_board);
+    console.log(sudoku_board);
     // await console.log(sudoku_board)
     // if(solve(sudoku_board)){
     //     remove_some(sudoku_board)
@@ -112,8 +126,8 @@ document.addEventListener("DOMContentLoaded", async() => {
     // }
     // await console.log(sudoku_board)
     // console.log(sudoku_board)
-    // remove_some(sudoku_board);
+    removed_board=remove_some(sudoku_board);
     // console.log(is_valid(sudoku_board))
-    display_board(sudoku_board);
+    display_board(removed_board);
     // console.log(sudoku_board);
 });
