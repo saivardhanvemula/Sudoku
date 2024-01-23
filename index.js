@@ -81,16 +81,15 @@ document.querySelector(".remove").addEventListener("click", () => {
     document.querySelector(".remove").classList.toggle("select");
     console.log(remove);
 
-    // if(remove){
-    //     document.querySelectorAll
-    // }
 });
 document.querySelectorAll(".box").forEach((b) => {
     b.addEventListener("dblclick", () => {
         if (remove && !b.classList.contains("fixed")) {
             let x = b.id[1];
             let y = b.id[2];
-            console.log(b.innerHTML);
+            sudoku_board[x-1][y-1]=0
+            b.innerHTML=" ";
+            empty=empty+1
         }
     });
     b.addEventListener("click", () => {
