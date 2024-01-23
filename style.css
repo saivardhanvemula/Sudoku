@@ -61,8 +61,35 @@ body{
     justify-content: center;
 }
 .opts{
+    width: 615px;
+    height: 60px;
+    background-color: aquamarine;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    
+    margin-top: 50px;
+    margin-bottom: 0px;
 }
+.opt{
+    color: white;
+    padding: 13px;
+    font-size: large;
+    border-radius: 4px;
+    /* box-shadow:  9px 9px  black; */
+    cursor: pointer;
+    margin: 5px;
+    /* height: 40px; */
+    background-color: black;
+}
+.valid{
+    background-color: green;
+}
+.invalid{
+    background-color: red;
+
+}
+/* @keyframes selected {
+    to{
+        opacity: 100;
+    }
+} */

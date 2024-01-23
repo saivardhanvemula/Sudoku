@@ -1,18 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    sudoku_board = Array(9)
-        .fill(0)
-        .map((x) => Array(9).fill(0));
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            let a = nums[Math.floor(Math.random() * nums.length)];
-            sudoku_board[3 * i][3 * j] = a;
-            nums.splice(nums.indexOf(a), 1);
-        }
-    }
-    solve(sudoku_board);
-    remove_some(sudoku_board);
-    display_board(sudoku_board);
+    start();
+    // let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    // sudoku_board = Array(9)
+    //     .fill(0)
+    //     .map((x) => Array(9).fill(0));
+    // for (let i = 0; i < 3; i++) {
+    //     for (let j = 0; j < 3; j++) {
+    //         let a = nums[Math.floor(Math.random() * nums.length)];
+    //         sudoku_board[3 * i][3 * j] = a;
+    //         nums.splice(nums.indexOf(a), 1);
+    //     }
+    // }
+    // solve(sudoku_board);
+    // remove_some(sudoku_board);
+    // // let removed=
+    // // console.log(removed)
+    // display_board(sudoku_board);
 });
 let empty = 1;
 nums = document.querySelectorAll(".num");
@@ -30,17 +33,46 @@ nums.forEach((b) => {
     });
 });
 document.querySelector(".validate").addEventListener("click", () => {
-    console.log(valid_sudoku(sudoku_board));
+    if (isValidSudoku(sudoku_board)) {
+        document.querySelector(".validate").classList.toggle("valid");
+
+    } else {
+        document.querySelector(".validate").classList.add("invalid");
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                let box = document.querySelector(`#r${i + 1}${j + 1}`);
+                let num = sudoku_board[i][j];
+                // sudoku_board[i][j] = 0;
+                if (
+                    !box.classList.contains("fixed") &&
+                    !is_valid(sudoku_board, i, j, num) &&
+                    box.innerHTML != 0
+                ) {
+                    console.log(is_valid(sudoku_board, i, j, num));
+                    console.log(`r${i + 1}${j + 1}`);
+                    box.classList.add("invalid");
+                }
+            }
+        }
+        setTimeout(function () {
+            console.log("removing")
+            document.querySelectorAll(".invalid").forEach((b) => {
+                console.log(b)
+                b.classList.remove("invalid");
+            });
+        }, 2000);
+    }
 });
+
 document.querySelectorAll(".box").forEach((b) => {
     b.addEventListener("click", () => {
         if (selected && !b.classList.contains("fixed")) {
             let x = b.id[1];
             let y = b.id[2];
-            if (!sudoku_board[x-1][y-1]) {
+            if (!sudoku_board[x - 1][y - 1]) {
                 empty = empty - 1;
             }
-            
+
             sudoku_board[x - 1][y - 1] = Number(selected.innerHTML);
             b.innerHTML = selected.innerHTML;
             // console.log(x,y)
@@ -51,6 +83,22 @@ document.querySelectorAll(".box").forEach((b) => {
         }
     });
 });
+function start() {
+    let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    sudoku_board = Array(9)
+        .fill(0)
+        .map((x) => Array(9).fill(0));
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            let a = nums[Math.floor(Math.random() * nums.length)];
+            sudoku_board[3 * i][3 * j] = a;
+            nums.splice(nums.indexOf(a), 1);
+        }
+    }
+    solve(sudoku_board);
+    remove_some(sudoku_board);
+    display_board(sudoku_board);
+}
 function display_board(board) {
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
@@ -121,6 +169,49 @@ function remove_some(board) {
 
         board[row][col] = 0;
     }
-    return board;
+    //  const removed=[].board
     // console.log(board)
 }
+function check(list) {
+    d = [];
+    // console.log(list,d)
+    for (let num of list) {
+        if (num != "0" && d.includes(num)) {
+            // console.log(list[i],d,list[i] in d)
+            return false;
+        } else {
+            d.push(num);
+        }
+    }
+    return true;
+}
+var isValidSudoku = function (board) {
+    for (let i = 0; i < 9; i++) {
+        if (!check(board[i])) return false;
+        l = [];
+        for (let j = 0; j < 9; j++) {
+            if (board[j][i] != "0") {
+                if (l.includes(board[j][i])) {
+                    // console.log(board[j][i], j, i, l);
+                    return false;
+                } else {
+                    l.push(board[j][i]);
+                }
+            }
+        }
+    }
+    for (let i = 0; i < 9; i += 3) {
+        for (let j = 0; j < 9; j += 3) {
+            let box = [];
+            for (let m = i; m < i + 3; m++) {
+                for (let n = j; n < j + 3; n++) {
+                    box.push(board[m][n]);
+                }
+            }
+            if (!check(box)) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
