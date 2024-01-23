@@ -14,13 +14,7 @@
     margin: 10px 10px;
     /* display: none; */
 }
-.num:hover,
-.select {
-    background-color: grey;
-    scale: 1.05;
-    transition: ease-in-out 10ms;
-    cursor: pointer;
-}
+
 #board{
     display: grid;
     grid-template-columns: repeat(3,1fr);
@@ -92,4 +86,14 @@ body{
     to{
         opacity: 100;
     }
+} */
+.num:hover,
+.select {
+    background-color: grey;
+    scale: 1.05;
+    transition: ease-in-out 10ms;
+    cursor: pointer;
+}
+/* .remove{
+    background-color: gray;
 } */

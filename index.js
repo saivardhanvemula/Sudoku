@@ -18,24 +18,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // display_board(sudoku_board);
 });
 let empty = 1;
+let remove = false;
+let selected;
 nums = document.querySelectorAll(".num");
 nums.forEach((b) => {
     b.addEventListener("click", () => {
-        // selected = Number(b.innerHTML);
+        if(selected || remove)document.querySelector(".select").classList.remove("select")
         selected = b;
         selected.classList.add("select");
-
-        nums.forEach((a) => {
-            if (a !== selected) {
-                a.classList.remove("select");
-            }
-        });
     });
 });
 document.querySelector(".validate").addEventListener("click", () => {
     if (isValidSudoku(sudoku_board)) {
         document.querySelector(".validate").classList.toggle("valid");
-
+        setTimeout(function () {
+            console.log("removing");
+            document.querySelector(".valid").classList.remove("valid")
+        }, 1500);
     } else {
         document.querySelector(".validate").classList.add("invalid");
         for (let i = 0; i < 9; i++) {
@@ -55,16 +54,45 @@ document.querySelector(".validate").addEventListener("click", () => {
             }
         }
         setTimeout(function () {
-            console.log("removing")
+            console.log("removing");
             document.querySelectorAll(".invalid").forEach((b) => {
-                console.log(b)
+                console.log(b);
                 b.classList.remove("invalid");
             });
         }, 2000);
     }
 });
+document.querySelector(".reset").addEventListener("click", () => {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            box = document.querySelector(`#r${i + 1}${j + 1}`);
+            if (!box.classList.contains("fixed") && sudoku_board[i][j] != 0) {
+                empty = empty + 1;
+                // console.log(box)
+                box.innerHTML = " ";
+                sudoku_board[i][j] = 0;
+            }
+        }
+    }
+});
+document.querySelector(".remove").addEventListener("click", () => {
+    if(selected || remove)document.querySelector(".select").classList.remove("select")
+    remove = !remove;
+    document.querySelector(".remove").classList.toggle("select");
+    console.log(remove);
 
+    // if(remove){
+    //     document.querySelectorAll
+    // }
+});
 document.querySelectorAll(".box").forEach((b) => {
+    b.addEventListener("dblclick", () => {
+        if (remove && !b.classList.contains("fixed")) {
+            let x = b.id[1];
+            let y = b.id[2];
+            console.log(b.innerHTML);
+        }
+    });
     b.addEventListener("click", () => {
         if (selected && !b.classList.contains("fixed")) {
             let x = b.id[1];
