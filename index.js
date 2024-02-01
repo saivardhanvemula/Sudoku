@@ -1,29 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
     start();
-    // let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    // sudoku_board = Array(9)
-    //     .fill(0)
-    //     .map((x) => Array(9).fill(0));
-    // for (let i = 0; i < 3; i++) {
-    //     for (let j = 0; j < 3; j++) {
-    //         let a = nums[Math.floor(Math.random() * nums.length)];
-    //         sudoku_board[3 * i][3 * j] = a;
-    //         nums.splice(nums.indexOf(a), 1);
-    //     }
-    // }
-    // solve(sudoku_board);
-    // remove_some(sudoku_board);
-    // // let removed=
-    // // console.log(removed)
-    // display_board(sudoku_board);
+    remove_some(sudoku_board);
+    console.log(sudoku_board);
+    console.log(solved);
+    display_board(sudoku_board);
 });
 let empty = 1;
 let remove = false;
 let selected;
+let solved;
 nums = document.querySelectorAll(".num");
 nums.forEach((b) => {
     b.addEventListener("click", () => {
-        if(selected || remove)document.querySelector(".select").classList.remove("select")
+        if (selected || remove)
+            document.querySelector(".select").classList.remove("select");
         selected = b;
         selected.classList.add("select");
     });
@@ -33,34 +23,28 @@ document.querySelector(".validate").addEventListener("click", () => {
         document.querySelector(".validate").classList.toggle("valid");
         setTimeout(function () {
             console.log("removing");
-            document.querySelector(".valid").classList.remove("valid")
-        }, 1500);
+            document.querySelector(".valid").classList.remove("valid");
+        }, 1250);
     } else {
         document.querySelector(".validate").classList.add("invalid");
         for (let i = 0; i < 9; i++) {
             for (let j = 0; j < 9; j++) {
-                let box = document.querySelector(`#r${i + 1}${j + 1}`);
-                let num = sudoku_board[i][j];
-                // sudoku_board[i][j] = 0;
-                if (
-                    !box.classList.contains("fixed") &&
-                    !is_valid(sudoku_board, i, j, num) &&
-                    box.innerHTML != 0
-                ) {
-                    console.log(is_valid(sudoku_board, i, j, num));
-                    console.log(`r${i + 1}${j + 1}`);
-                    box.classList.add("invalid");
+                if (sudoku_board[i][j] != 0) {
+                    let box = document.querySelector(`#r${i + 1}${j + 1}`);
+                    if (sudoku_board[i][j] != solved[i][j]) {
+                        box.classList.add("invalid");
+                    }
                 }
             }
         }
-        setTimeout(function () {
-            console.log("removing");
-            document.querySelectorAll(".invalid").forEach((b) => {
-                console.log(b);
-                b.classList.remove("invalid");
-            });
-        }, 2000);
     }
+    setTimeout(function () {
+        console.log("removing");
+        document.querySelectorAll(".invalid").forEach((b) => {
+            console.log(b);
+            b.classList.remove("invalid");
+        });
+    }, 1250);
 });
 document.querySelector(".reset").addEventListener("click", () => {
     for (let i = 0; i < 9; i++) {
@@ -76,21 +60,21 @@ document.querySelector(".reset").addEventListener("click", () => {
     }
 });
 document.querySelector(".remove").addEventListener("click", () => {
-    if(selected || remove)document.querySelector(".select").classList.remove("select")
+    if (selected || remove)
+        document.querySelector(".select").classList.remove("select");
     remove = !remove;
-if(selected)selected=false
+    if (selected) selected = false;
     document.querySelector(".remove").classList.toggle("select");
     console.log(remove);
-
 });
 document.querySelectorAll(".box").forEach((b) => {
     b.addEventListener("click", () => {
         if (remove && !b.classList.contains("fixed")) {
             let x = b.id[1];
             let y = b.id[2];
-            sudoku_board[x-1][y-1]=0
-            b.innerHTML=" ";
-            empty=empty+1
+            sudoku_board[x - 1][y - 1] = 0;
+            b.innerHTML = " ";
+            empty = empty + 1;
         }
         if (selected && !b.classList.contains("fixed")) {
             let x = b.id[1];
@@ -105,7 +89,7 @@ document.querySelectorAll(".box").forEach((b) => {
         }
         console.log(empty);
         if (empty == 0) {
-            console.log("completed");
+            if (isValidSudoku(sudoku_board)) alert("Won!!!");
         }
     });
 });
@@ -122,8 +106,13 @@ function start() {
         }
     }
     solve(sudoku_board);
-    remove_some(sudoku_board);
-    display_board(sudoku_board);
+
+    solved = deepCopyArray(sudoku_board); // remove_some(sudoku_board);
+}
+function deepCopyArray(arr) {
+    return arr.map((item) =>
+        Array.isArray(item) ? deepCopyArray(item) : item
+    );
 }
 function display_board(board) {
     for (let i = 0; i < 9; i++) {
