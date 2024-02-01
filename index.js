@@ -78,12 +78,13 @@ document.querySelector(".reset").addEventListener("click", () => {
 document.querySelector(".remove").addEventListener("click", () => {
     if(selected || remove)document.querySelector(".select").classList.remove("select")
     remove = !remove;
+if(selected)selected=false
     document.querySelector(".remove").classList.toggle("select");
     console.log(remove);
 
 });
 document.querySelectorAll(".box").forEach((b) => {
-    b.addEventListener("dblclick", () => {
+    b.addEventListener("click", () => {
         if (remove && !b.classList.contains("fixed")) {
             let x = b.id[1];
             let y = b.id[2];
@@ -91,8 +92,6 @@ document.querySelectorAll(".box").forEach((b) => {
             b.innerHTML=" ";
             empty=empty+1
         }
-    });
-    b.addEventListener("click", () => {
         if (selected && !b.classList.contains("fixed")) {
             let x = b.id[1];
             let y = b.id[2];
