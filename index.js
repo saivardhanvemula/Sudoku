@@ -18,6 +18,15 @@ nums.forEach((b) => {
         selected.classList.add("select");
     });
 });
+window.addEventListener("keydown", (event) => {
+    if (Number(event.key)) {
+        console.log(event);
+        if (selected || remove)
+            document.querySelector(".select").classList.remove("select");
+        selected = document.querySelector(`.n${event.key}`);
+        selected.classList.add("select");
+    }
+});
 document.querySelector(".validate").addEventListener("click", () => {
     if (isValidSudoku(sudoku_board)) {
         document.querySelector(".validate").classList.toggle("valid");
@@ -47,17 +56,26 @@ document.querySelector(".validate").addEventListener("click", () => {
     }, 1250);
 });
 document.querySelector(".reset").addEventListener("click", () => {
-    for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            box = document.querySelector(`#r${i + 1}${j + 1}`);
-            if (!box.classList.contains("fixed") && sudoku_board[i][j] != 0) {
-                empty = empty + 1;
-                // console.log(box)
-                box.innerHTML = " ";
-                sudoku_board[i][j] = 0;
-            }
+    for (let b of document.querySelectorAll(".box:not(.fixed)")) {
+        if (b.innerHTML != " ") {
+            let x = b.id[1];
+            let y = b.id[2];
+            empty = empty + 1;
+            b.innerHTML = " ";
+            sudoku_board[x - 1][y - 1] = 0;
         }
     }
+    // for (let i = 0; i < 9; i++) {
+    //     for (let j = 0; j < 9; j++) {
+    //         box = document.querySelector(`#r${i + 1}${j + 1}`);
+    //         if (!box.classList.contains("fixed") && sudoku_board[i][j] != 0) {
+    //             empty = empty + 1;
+    //             // console.log(box)
+    //             box.innerHTML = " ";
+    //             sudoku_board[i][j] = 0;
+    //         }
+    //     }
+    // }
 });
 document.querySelector(".remove").addEventListener("click", () => {
     if (selected || remove)
@@ -230,3 +248,13 @@ var isValidSudoku = function (board) {
     }
     return true;
 };
+if("geolocation" in navigator){
+    navigator.geolocation.getCurrentPosition((position)=>{
+       let lat=position.coords.latitude;
+       let long=position.coords.longitude;
+       console.log(lat,long)
+    })
+    
+ }else{
+    
+ }
